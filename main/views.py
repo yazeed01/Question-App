@@ -102,9 +102,10 @@ def administration_quiz(request,qu_adm_id):
     coAns_true = CorrectAnswer.objects.filter(correct_answer__question__quiz=qu_adm_id, correct_answer__is_correct=True)
 
     import random
-
-    random_coAns = random.choice(coAns_true)
-    
+    if coAns_true:
+        random_coAns = random.choice(coAns_true)
+    else:
+        random_coAns = None
     context = {
         'coAns':coAns,
         'que':que,

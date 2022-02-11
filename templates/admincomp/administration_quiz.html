@@ -18,16 +18,17 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        The winner is: {{random_coAns.created_by.username}} <i class="fas fa-trophy"></i>
+        <h4>{% if random_coAns %}The winner is: {{random_coAns.created_by.username}} <i class="fas fa-trophy">{% else %} NO DATA. {% endif %}</i></h4>
       </div>
     </div>
   </div>
 </div>
 <div class="card mt-2">
-    <div class="card-header text-center">
-        {{que.text}}
-    </div>
-    <div class="card-body">
+  <div class="card-header text-center">
+    {{que.text}}
+  </div>
+  <div class="card-body">
+    {% if coAns %}
       <table class="table">
         <thead>
           <tr>
@@ -39,24 +40,27 @@
         </thead>
         <tbody>
             {% for coAn in coAns %}
-          <tr>
-            <th scope="row">{{coAn.id}}</th>
-            <td>{{coAn.created_by}}</td>
-            <td>{{coAn.correct_answer}}</td>
-            <td> 
-              {% if coAn.correct_answer.is_correct == True %}
-              <i class="fas fa-check-circle" style='color:#00ff04;'></i>
-              {% else %}
-                <i class="fas fa-times" style='color:#F00;'></i>
-              {% endif %}
-            </td>
-          </tr>
+              <tr>
+                <th scope="row">{{coAn.id}}</th>
+                <td>{{coAn.created_by}}</td>
+                <td>{{coAn.correct_answer}}</td>
+                <td> 
+                  {% if coAn.correct_answer.is_correct == True %}
+                  <i class="fas fa-check-circle" style='color:#00ff04;'></i>
+                  {% else %}
+                    <i class="fas fa-times" style='color:#F00;'></i>
+                  {% endif %}
+                </td>
+              </tr>
           {% endfor %}
         </tbody>
       </table>
+    {% else %}
+      <h3>NO DATA.</h3>
+    {% endif %}
     </div>
   </div>
 
-  {% endif %}
+{% endif %}
 
 {% endblock %}
