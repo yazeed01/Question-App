@@ -1,0 +1,30 @@
+{% extends 'main/base.html'%}
+{% block title %} Q App | Index {% endblock %}
+
+{% block body %}
+
+{% if request.user.is_superuser %}
+<div class="row">
+    {% for quiz in quizs %}
+        <div class="col-4">
+            <div class="card mt-5">
+                <div class="card-body">
+                    <h5 class="card-title"> <h2>{{quiz.name}}</h2></h5>
+                    <p>From {{quiz.date_start}} to {{quiz.date_end}}</p>
+
+                    {% if quiz.date_end >= today.date %}
+                        <p>Status: Active</p>
+                        <p>will end in {{quiz.date_end}}</p>
+                        <a href="{% url 'main:administration_quiz' quiz.id %}" class="btn btn-primary">Show results</a>
+                    {% else %}
+                        <p>Status: finished</p>
+                        <h2>The question period has expired.</h2>
+                    {% endif %} 
+
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+{% endif %}
+{% endblock body %}

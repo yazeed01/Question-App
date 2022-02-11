@@ -81,3 +81,33 @@ def quiz(request, qu_id):
 
 def success(request):
     return render(request, 'main/success.html')
+
+
+def administration(request):
+    quizs = Quiz.objects.all()
+    
+    context = {
+    'quizs':quizs,
+    }
+    return render(request, 'admincomp/administration.html',context)
+
+def administration_quiz(request,qu_adm_id):
+    # ques= get_object_or_404(Questions, quiz=qu_adm_id)
+    que= Questions.objects.get(quiz_id=qu_adm_id)
+
+    # Get All for show in Table.
+    coAns = CorrectAnswer.objects.filter(correct_answer__question__quiz=qu_adm_id)
+    
+    # Get just for correct answer 'True'
+    coAns_true = CorrectAnswer.objects.filter(correct_answer__question__quiz=qu_adm_id, correct_answer__is_correct=True)
+
+    import random
+
+    random_coAns = random.choice(coAns_true)
+    
+    context = {
+        'coAns':coAns,
+        'que':que,
+        'random_coAns':random_coAns
+    }
+    return render(request, 'admincomp/administration_quiz.html', context)

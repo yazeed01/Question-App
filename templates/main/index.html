@@ -25,7 +25,20 @@
                 </div>
             </div>
         {% endfor %}
+
+        {% if request.user.is_superuser %}
+        <div class="col-4">
+            <div class="card mt-5">
+                <div class="card-body">
+                    <h5 class="card-title">Hello, {{request.user}}</h5>
+                    <p>This is the administration area, the competition area.</p>
+                    <a href="{% url 'main:administration' %}" class="btn btn-primary">Go</a>
+
+                </div>
+            </div>
+        </div>
     </div>
+    {% endif %}
 
 
 <div>
