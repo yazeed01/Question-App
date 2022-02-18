@@ -1,5 +1,3 @@
-from msilib import Table
-from tkinter.messagebox import NO
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import TemplateView, FormView
 from django.contrib.auth.decorators import login_required
@@ -14,29 +12,29 @@ from .forms import CorrectAnswerForm
 from datetime import datetime
 # Create your views here.
 
-@login_required
+# @login_required
 def index(request):
     quizs = Quiz.objects.all()
-    if request.user.is_authenticated:
+    # if request.user.is_authenticated:
 
-        users  = User.objects.all()
-        
-        li_users = []
-        li_points = []
-        
-        for i in users:
-            po =  Points.objects.filter(correct_answer_point__created_by=i, correct_answer_point__correct_answer__is_correct=True)
-            if po:
-                li_users.append(str(i.username))
-            to_pos = 0
-            for p in po:
-                to_pos = to_pos + p.proints
-            li_points.append(to_pos)
+    users  = User.objects.all()
+    
+    li_users = []
+    li_points = []
+    
+    for i in users:
+        po =  Points.objects.filter(correct_answer_point__created_by=i, correct_answer_point__correct_answer__is_correct=True)
+        if po:
+            li_users.append(str(i.username))
+        to_pos = 0
+        for p in po:
+            to_pos = to_pos + p.proints
+        li_points.append(to_pos)
 
-    else:
-        ans = None
-        li_points = None
-        li_users = None
+    # else:
+    #     ans = None
+    #     li_points = None
+    #     li_users = None
     
     context = {
         'quizs':quizs,
